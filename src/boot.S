@@ -52,4 +52,4 @@ el1_entry:
 
 	mov	sp, #LOW_MEMORY     // Set stack pointer to #LOW_MEMORY macro
 	bl	kernel_main         // Branch to kernel_main and save return address in link register (lr/X30)
-	b 	infinite_loop		    // should never come here
+	b 	infinite_loop		// should never come here
