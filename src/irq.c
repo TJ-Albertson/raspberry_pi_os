@@ -27,7 +27,10 @@ const char *entry_error_messages[] = {
 };
 
 void enable_interrupt_controller()
-{
+{	
+	// BCM2837 ARM Peripherals manual.
+	// Enables bit 1 of the 32bit "Enable IRQs 1" register. 
+	// bit 1 = 'system timer match 1'
 	put32(ENABLE_IRQS_1, SYSTEM_TIMER_IRQ_1);
 }
 
