@@ -17,5 +17,5 @@ delay:
 .globl get_el
 get_el:
 	mrs x0, CurrentEL
-	lsr x0, x0, #2
+	lsr x0, x0, #2 		  // Logical Shift Right. X0 = X0 >> 2
 	ret

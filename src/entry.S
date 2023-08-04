@@ -1,17 +1,19 @@
 #include "entry.h"
 
+	// Default interrupt/exception handler. Just prints exception type
 	.macro handle_invalid_entry type
 	kernel_entry
 	mov	x0, #\type
 	mrs	x1, esr_el1
 	mrs	x2, elr_el1
+	// show_invalid_entry_message is in irq.c
 	bl	show_invalid_entry_message
 	b	err_hang
 	.endm
 
-	// Used to create entries in vector table. 
+	// Used to create entries in vector table. Each entry is just a label to the actual handler function becuase the maximum entry memory size is 0x80 bytes.
 	.macro	ventry	label
-	.align	7
+	.align	7 // 2^7 == 0x80
 	b	\label
 	.endm
 
@@ -61,7 +63,8 @@
 
 /*
  * Exception vectors and their corresponding handler functions. 
- * 
+ * The only one actually being "handled" is el1_irq. 
+ * The others just print the name of the exception.
  */
 .align	11
 .globl vectors 
