@@ -1,6 +1,6 @@
 #include "utils.h"
-#include "peripherals/mini_uart.h"
-#include "peripherals/gpio.h"
+#include "peripherals/p_mini_uart.h"
+#include "peripherals/p_gpio.h"
 
 
 /*

@@ -1,7 +1,7 @@
 #ifndef	_P_TIMER_H
 #define	_P_TIMER_H
 
-#include "peripherals/base.h"
+#include "peripherals/p_base.h"
 
 // System Timer Control/Status
 #define TIMER_CS        (PBASE+0x00003000) 

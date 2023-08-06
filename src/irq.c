@@ -2,7 +2,7 @@
 #include "printf.h"
 #include "timer.h"
 #include "entry.h"
-#include "peripherals/irq.h"
+#include "peripherals/p_irq.h"
 
 const char *entry_error_messages[] = {
 	"SYNC_INVALID_EL1t",
