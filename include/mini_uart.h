@@ -1,5 +1,5 @@
-#ifndef _P_UART_PL011_H
-#define _P_UART_PL011_H
+#ifndef	_MINI_UART_H
+#define	_MINI_UART_H
 
 // Initialize Mini UART on pins 14(Transmt) and 15(Receive)
 void uart_init(void);

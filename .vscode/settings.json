@@ -2,5 +2,9 @@
     "files.associations": {
         "entry.h": "c",
         "p_gpio.h": "c"
+    },
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#744e94bf",
+        "titleBar.activeBackground": "#b783e1bd"
     }
 }
