@@ -1,7 +1,6 @@
-#include <kernel/framebuffer.h>
-#include <kernel/gpu.h>
-#include <kernel/mem.h>
-#include <kernel/mailbox.h>
+#include <framebuffer.h>
+#include <mailbox.h>
+//#include <kernel/gpu.h>
 
 int framebuffer_init(void) {
     property_message_tag_t tags[5];

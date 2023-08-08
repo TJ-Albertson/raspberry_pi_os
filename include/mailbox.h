@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include "peripherals/p_mailbox.h"
 
 #ifndef MAILBOX_H

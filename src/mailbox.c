@@ -1,11 +1,21 @@
-#include <mailbox.h>
-#include <kernel/mem.h>
-#include <common/stdlib.h>
+#include "mailbox.h"
+#include "peripherals/p_mailbox.h"
+#include "utils.h"
 
-
-mail_message_t mailbox_read(int channel) {
+mail_message_t mailbox_read(int channel_to_read_from) {
     mail_status_t stat;
     mail_message_t res;
+
+
+    
+
+
+    unsigned int mail_status = get32(MAIL0_STATUS);
+
+    while(mail_status & (1 << 1)) {
+        mail_status = get32(MAIL0_STATUS);
+    }
+
 
     // Make sure that the message is from the right channel
     do {
