@@ -1,4 +1,4 @@
-#include "mb.h"
+#include "mailbox.h"
 #include "terminal_font_color.h"
 
 unsigned int width, height, pitch, isrgb;

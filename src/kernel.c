@@ -3,9 +3,7 @@
 #include "irq.h"
 #include "mini_uart.h"
 
-//#include "io.h"
 #include "fb.h"
-
 
 void kernel_main(void)
 {
