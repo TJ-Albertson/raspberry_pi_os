@@ -4,11 +4,32 @@
 unsigned int width, height, pitch, isrgb;
 unsigned char *framebuffer;
 
+/*        0       4       8      12      16      20      24      28      32
+       +---------------------------------------------------------------+
+0x00   |                         Buffer Size                           |
+       +---------------------------------------------------------------+
+0x04   |                   Request/Response Code                       |
+       +---------------------------------------------------------------+
+0x08   |                             Tags                              |
+...    \\                                                             \\
+0xXX   |                             Tags                              |
+       +---------------------------------------------------------------+
+0xXX+4 |                           End Tag (0)                         |
+       +---------------------------------------------------------------+
+0xXX+8 |                           Padding                             |
+...    \\                                                             \\
+0xXX+16|                           Padding                             |
+       +---------------------------------------------------------------+ */
+
 void fb_init()
 {
+    // Buffer Size
     mbox[0] = 35*4; // Length of message in bytes
+
+    // Request/Response Code
     mbox[1] = MAILBOX_REQUEST;
 
+    // Start of tags
     mbox[2] = MAILBOX_TAG_SET_PHYSICAL_WH; // Tag identifier
     mbox[3] = 8; // Value size in bytes
     mbox[4] = 0;
@@ -49,8 +70,10 @@ void fb_init()
     mbox[33] = 0; // Bytes per line
 
     mbox[34] = MAILBOX_TAG_LAST;
+    // End of tags
 
     // Check call is successful and we have a pointer with depth 32
+    // mbox gets overwritten with response message
     if (mbox_call(MAILBOX_CHANNEL_PROPERTY) && mbox[20] == 32 && mbox[28] != 0) {
         mbox[28] &= 0x3FFFFFFF; // Convert GPU address to ARM address
         width = mbox[10];       // Actual physical width
