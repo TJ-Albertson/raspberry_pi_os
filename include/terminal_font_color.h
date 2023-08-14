@@ -1,4 +1,4 @@
-unsigned int vgapal[] = {
+unsigned int vga_palette[] = {
     0x000000,
     0x0000AA,
     0x00AA00,

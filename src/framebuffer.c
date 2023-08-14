@@ -2,7 +2,7 @@
 #include "terminal_font_color.h"
 
 unsigned int width, height, pitch, isrgb;
-unsigned char *fb;
+unsigned char *framebuffer;
 
 void fb_init()
 {
@@ -57,14 +57,16 @@ void fb_init()
         height = mbox[11];      // Actual physical height
         pitch = mbox[33];       // Number of bytes per line
         isrgb = mbox[24];       // Pixel order
-        fb = (unsigned char *)((long)mbox[28]);
+        framebuffer = (unsigned char *)((long)mbox[28]);
     }
 }
 
-void drawPixel(int x, int y, unsigned char attr)
+void drawPixel(int x, int y, unsigned char color_index)
 {
-    int offs = (y * pitch) + (x * 4);
-    *((unsigned int*)(fb + offs)) = vgapal[attr & 0x0f];
+    // pitch == number of bytes per line
+    // x * 4 becuase each pixel is represented by 4 bytes in 32 bit color
+    int offset = (y * pitch) + (x * 4);
+    *((unsigned int*)(framebuffer + offset)) = vga_palette[color_index & 0x0f]; // assign color to pixel (only 16 colors in palette)
 }
 
 void drawRect(int x1, int y1, int x2, int y2, unsigned char attr, int fill)
