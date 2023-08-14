@@ -94,7 +94,7 @@ void drawPixel(int x, int y, unsigned char color_index)
 
 void drawRect(int x1, int y1, int x2, int y2, unsigned char attr, int fill)
 {
-    int y=y1;
+    int y = y1;
 
     while (y <= y2) {
        int x=x1;
@@ -173,7 +173,7 @@ void drawChar(unsigned char ch, int x, int y, unsigned char attr)
 	    unsigned char mask = 1 << j;
 	    unsigned char col = (*glyph & mask) ? attr & 0x0f : (attr & 0xf0) >> 4;
 
-	    drawPixel(x+j, y+i, col);
+	    drawPixel(x + j, y + i, col);
 	}
 	glyph += FONT_BPL;
     }
