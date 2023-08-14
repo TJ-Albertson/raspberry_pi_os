@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "mailbox.h"
 #include "peripherals/p_mailbox.h"
 
 // The buffer must be 16-byte aligned as only the upper 28 bits of the address can be passed via the mailbox

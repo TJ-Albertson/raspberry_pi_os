@@ -1,34 +1,34 @@
 extern volatile unsigned int mbox[36];
 
-enum {
-    MBOX_REQUEST  = 0
-};
+// Request/Response Codes
+#define MAILBOX_REQUEST   0x00000000
+#define MAILBOX_RESPONSE  0x80000000
+#define MAILBOX_FULL      0x80000000
+#define MAILBOX_EMPTY     0x40000000
 
-enum {
-    MBOX_CH_POWER = 0,
-    MBOX_CH_FB    = 1,
-    MBOX_CH_VUART = 2,
-    MBOX_CH_VCHIQ = 3,
-    MBOX_CH_LEDS  = 4,
-    MBOX_CH_BTNS  = 5,
-    MBOX_CH_TOUCH = 6,
-    MBOX_CH_COUNT = 7,
-    MBOX_CH_PROP  = 8 // Request from ARM for response by VideoCore
-};
+// Channels
+#define MAILBOX_CHANNEL_POWER_MANAGEMENT    0 
+#define MAILBOX_CHANNEL_FRAMEBUFFER         1
+#define MAILBOX_CHANNEL_VIRTUAL_UART        2
+#define MAILBOX_CHANNEL_VCHIQ               3 
+#define MAILBOX_CHANNEL_LEDS                4        
+#define MAILBOX_CHANNEL_BUTTONS             5
+#define MAILBOX_CHANNEL_TOUCH_SCREEN        6
+#define MAILBOX_CHANNEL_COUNT               7
+#define MAILBOX_CHANNEL_PROPERTY            8
 
-enum {
-    MBOX_TAG_SETPOWER   = 0x28001,
-    MBOX_TAG_SETCLKRATE = 0x38002,
+// Tags
+#define MAILBOX_TAG_SET_POWER_STATE     0x00028001
+#define MAILBOX_TAG_SET_CLOCK_RATE      0x00038002
 
-    MBOX_TAG_SETPHYWH   = 0x48003,
-    MBOX_TAG_SETVIRTWH  = 0x48004,
-    MBOX_TAG_SETVIRTOFF = 0x48009,
-    MBOX_TAG_SETDEPTH   = 0x48005,
-    MBOX_TAG_SETPXLORDR = 0x48006,
-    MBOX_TAG_GETFB      = 0x40001,
-    MBOX_TAG_GETPITCH   = 0x40008,
+#define MAILBOX_TAG_SET_PHYSICAL_WH     0x00048003
+#define MAILBOX_TAG_SET_VIRTUAL_WH      0x00048004
+#define MAILBOX_TAG_SET_VIRTUAL_OFFSET  0x00048009
+#define MAILBOX_TAG_SET_DEPTH           0x00048005
+#define MAILBOX_TAG_SET_PIXEL_ORDER     0x00048006
+#define MAILBOX_TAG_GET_FRAMEBUFFER     0x00040001
+#define MAILBOX_TAG_GET_PITCH           0x00040008
 
-    MBOX_TAG_LAST       = 0
-};
+#define MAILBOX_TAG_LAST                0x00000000
 
 unsigned int mbox_call(unsigned char ch);
