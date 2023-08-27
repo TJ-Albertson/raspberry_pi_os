@@ -1,2 +1,2 @@
 build/kernel_c.o: src/kernel.c include/printf.h include/timer.h \
- include/irq.h include/mini_uart.h include/framebuffer.h
+ include/irq.h include/mini_uart.h include/hvs.h include/framebuffer.h

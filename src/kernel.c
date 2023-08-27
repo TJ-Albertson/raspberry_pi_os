@@ -3,7 +3,10 @@
 #include "irq.h"
 #include "mini_uart.h"
 
+#include "hvs.h"
 #include "framebuffer.h"
+
+#include <stdint.h>
 
 void kernel_main(void)
 {
@@ -13,8 +16,7 @@ void kernel_main(void)
 
 	printf("Start\n\n");
 
-	//rpi4_osdev_uart_init();
-	/*
+
 	
 
 	irq_vector_init();
@@ -25,7 +27,7 @@ void kernel_main(void)
 	
 	int el = get_el();
 	printf("Exception level: %d \r\n", el);
-	*/
+	
 
 	fb_init();
 
@@ -41,6 +43,28 @@ void kernel_main(void)
     drawString(100,100,"Hello world!",0x0f);
 
     drawLine(100,500,350,700,0x0c);
+
+	delay(9000000);
+
+	uint16_t* const fb_one     = (uint16_t*)(0x10000000);
+
+	const uint16_t screen_width = 1920, screen_height = 1080;
+    const uint16_t fb_width = screen_width / 2, fb_height = screen_height / 2;
+    const uint16_t fb_center_x = fb_width / 2;
+    const uint16_t fb_center_y = fb_height / 2;
+
+	hvs_plane plane = {
+        .format = HVS_PIXEL_FORMAT_RGB565,
+        .pixel_order = HVS_PIXEL_ORDER_ARGB,
+        .start_x = (screen_width - fb_width) / 2,
+        .start_y = (screen_height - fb_height) / 2,
+        .height = fb_height,
+        .width = fb_width,
+        .pitch = fb_width * sizeof(uint16_t),
+        .framebuffer = fb_one
+    };
+    printf("Writing initial display list.r\n");
+    write_display_list(&plane, 1);
 
 	while (1){
 		//uart_send_character(uart_recv());
