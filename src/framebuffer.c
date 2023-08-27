@@ -1,6 +1,8 @@
 #include "mailbox.h"
 #include "terminal_font_color.h"
 
+#include "printf.h"
+
 unsigned int width, height, pitch, isrgb;
 unsigned char *framebuffer;
 
@@ -71,7 +73,7 @@ void fb_init()
 
     mbox[34] = MAILBOX_TAG_LAST;
     // End of tags
-
+    
     // Check call is successful and we have a pointer with depth 32
     // mbox gets overwritten with response message
     if (mbox_call(MAILBOX_CHANNEL_PROPERTY) && mbox[20] == 32 && mbox[28] != 0) {
@@ -81,6 +83,7 @@ void fb_init()
         pitch = mbox[33];       // Number of bytes per line
         isrgb = mbox[24];       // Pixel order
         framebuffer = (unsigned char *)((long)mbox[28]);
+        printf("Mailbox call successful");
     }
 }
 

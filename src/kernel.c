@@ -7,13 +7,15 @@
 
 void kernel_main(void)
 {
+	uart_init();
+	init_printf(0, put_character);
 
-	
 
+	printf("Start\n\n");
 
 	//rpi4_osdev_uart_init();
 	/*
-	init_printf(0, put_character);
+	
 
 	irq_vector_init();
 	timer_init();
