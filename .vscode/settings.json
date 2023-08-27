@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "entry.h": "c",
-        "p_gpio.h": "c"
+        "p_gpio.h": "c",
+        "stdlib.h": "c"
     },
     "workbench.colorCustomizations": {
         "activityBar.background": "#744e94bf",

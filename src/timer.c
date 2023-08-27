@@ -21,5 +21,5 @@ void handle_timer_irq(void)
 
 	// Awknowled the interrupt happened so the next one can go through
 	put32(TIMER_CS, TIMER_CS_M1);
-	printf("Timer interrupt received\n\r");
+	//printf("Timer interrupt received\n\r");
 }
