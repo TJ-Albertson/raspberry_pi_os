@@ -3,7 +3,7 @@
 #include "irq.h"
 #include "mini_uart.h"
 
-#include "fb.h"
+#include "framebuffer.h"
 
 void kernel_main(void)
 {
