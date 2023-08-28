@@ -83,7 +83,7 @@ void fb_init()
         pitch = mbox[33];       // Number of bytes per line
         isrgb = mbox[24];       // Pixel order
         framebuffer = (unsigned char *)((long)mbox[28]);
-        printf("Mailbox call successful");
+        printf("Framebuffer Mailbox call successful\n");
     }
 }
 

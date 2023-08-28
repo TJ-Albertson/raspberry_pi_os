@@ -38,7 +38,13 @@ master:
 	ldr	x0, =SPSR_VALUE
 	msr	spsr_el3, x0
 
-	// When taking an exception to EL3, holds the address to return to.
+
+	// allow simd, floating point
+	ldr x0, =CPACR_EL1_MASK
+	msr cpacr_el1, x0
+
+
+	// elr_el3 holds the address, to which we are going to return after eret instruction will be executed
 	adr	x0, el1_entry		
 	msr	elr_el3, x0
 

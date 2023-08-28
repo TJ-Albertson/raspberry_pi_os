@@ -1,7 +1,6 @@
 #ifndef	_P_V3D_H
 #define	_P_V3D_H
 
-
 // Defines for v3d register offsets
 #define V3D_IDENT0  (0x000>>2) // V3D Identification 0 (V3D block identity)
 #define V3D_IDENT1  (0x004>>2) // V3D Identification 1 (V3D Configuration A)

@@ -7,28 +7,31 @@
 #include <assert.h>
 
 #include "mailbox.h"
-#include "v3d.h"
+//#include "v3d.h"
+#include "peripherals/p_v3d.h"
 
 #include "printf.h"
 
 // I/O access
 volatile unsigned *v3d;
-int mbox;
+//int mbox;
 
 // Execute a nop control list to prove that we have contol.
 void testControlLists() {
 // First we allocate and map some videocore memory to build our control list in.
 
   // ask the blob to allocate us 256 bytes with 4k alignment, zero it.
-  unsigned int handle = mem_alloc(0x100, 0x1000, MEM_FLAG_COHERENT | MEM_FLAG_ZERO);
+  unsigned int handle = allocate_memory(0x100, 0x1000, MEM_FLAG_COHERENT | MEM_FLAG_ZERO);
   if (!handle) {
     printf("Error: Unable to allocate memory");
     return;
   }
   // ask the blob to lock our memory at a single location at give is that address.
-  uint32_t bus_addr = mem_lock(handle); 
+  uint32_t bus_addr = lock_memory(handle); 
   // map that address into our local address space.
-  uint8_t *list = (uint8_t*) mapmem(bus_addr, 0x100);
+
+  //uint8_t *list = (uint8_t*) mapmem(bus_addr, 0x100);
+  uint8_t *list = (uint8_t*)(0x10100000);
 
 // Now we construct our control list.
   // 255 nops, with a halt somewhere in the middle
@@ -56,9 +59,9 @@ void testControlLists() {
   printf("V3D_CT0CS: 0x%08x, Address: 0x%08x\n", v3d[V3D_CT0CS], v3d[V3D_CT0CA]);
 
 // Release memory;
-  unmapmem((void *) list, 0x100);
-  mem_unlock(mbox, handle);
-  mem_free(mbox, handle);
+  //unmapmem((void *) list, 0x100);
+  unlock_memory(handle);
+  release_memory(handle);
 }
 
 void addbyte(uint8_t **list, uint8_t d) {
@@ -90,13 +93,15 @@ void testTriangle() {
 // Like above, we allocate/lock/map some videocore memory
   // I'm just shoving everything in a single buffer because I'm lazy
   // 8Mb, 4k alignment
-  unsigned int handle = mem_alloc(0x800000, 0x1000, MEM_FLAG_COHERENT | MEM_FLAG_ZERO);
+  unsigned int handle = allocate_memory(0x800000, 0x1000, MEM_FLAG_COHERENT | MEM_FLAG_ZERO);
   if (!handle) {
     printf("Error: Unable to allocate memory");
     return;
   }
-  uint32_t bus_addr = mem_lock(handle); 
-  uint8_t *list = (uint8_t*) mapmem(bus_addr, 0x800000);
+  uint32_t bus_addr = lock_memory(handle); 
+  
+  //uint8_t *list = (uint8_t*) mapmem(bus_addr, 0x800000);
+  uint8_t *list = (uint8_t*)(0x10100000);
 
   uint8_t *p = list;
 
@@ -159,7 +164,7 @@ void testTriangle() {
   addbyte(&p, 0);
 
   int length = p - list;
-  assert(length < 0x80);
+  //assert(length < 0x80);
 
 // Shader Record
   p = list + 0x80;
@@ -306,28 +311,32 @@ void testTriangle() {
   v3d[V3D_CT1CS] = 0x20;
 
   // just dump the frame to a file
+  /*
   FILE *f = fopen("frame.data", "w");
   fwrite(list + 0x10000, (1920*1080*4), 1, f);
   fclose(f);
   printf("frame buffer memory dumpped to frame.data\n");
+  */
 
 // Release resources
-  unmapmem((void *) list, 0x800000);
-  mem_unlock(handle);
-  mem_free(handle);
+  //unmapmem((void *) list, 0x800000);
+  unlock_memory(handle);
+  release_memory(handle);
 }
 
-int main(int argc, char **argv) {
+int v3d_test() {
 
   // The blob now has this nice handy call which powers up the v3d pipeline.
   qpu_enable(1);
 
   // map v3d's registers into our address space.
-  v3d = (unsigned *) mapmem(0x20c00000, 0x1000);
+  //v3d = (unsigned *) mapmem(0x20c00000, 0x1000);
+
+  v3d = (unsigned *) (0x20c00000);
 
   if(v3d[V3D_IDENT0] != 0x02443356) { // Magic number.
     printf("Error: V3D pipeline isn't powered up and accessable.\n");
-    exit(-1);
+    return -1;
   }
 
   // We now have access to the v3d registers, we should do something.

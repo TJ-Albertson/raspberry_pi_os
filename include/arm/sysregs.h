@@ -39,4 +39,9 @@
 #define SPSR_EL1h			(5 << 0)
 #define SPSR_VALUE			(SPSR_MASK_ALL | SPSR_EL1h)
 
+
+
+
+#define CPACR_EL1_MASK (3 << 20)
+
 #endif

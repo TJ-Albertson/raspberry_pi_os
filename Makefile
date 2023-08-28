@@ -1,7 +1,7 @@
 ARMGNU ?= aarch64-linux-gnu
 
-COPS = -Wall -nostdlib -nostartfiles -ffreestanding -Iinclude -mgeneral-regs-only
-ASMOPS = -Iinclude 
+COPS = -Wall -nostdlib -nostartfiles -ffreestanding -Iinclude -D CURRENT_TIME="__DATE__ __TIME__"
+ASMOPS = -Iinclude -D CURRENT_TIME="__DATE__ __TIME__"
 
 BUILD_DIR = build
 SRC_DIR = src

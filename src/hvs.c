@@ -2,6 +2,7 @@
 #include "peripherals/p_hvs.h"
 
 #include "utils.h"
+#include "printf.h"
 
 #include <stdint.h>
 
@@ -21,14 +22,17 @@ static void write_plane(uint16_t* offset, hvs_plane plane)
        should interpret this plane. */
 
     /* Control Word */
+    printf("break 1\n\n");
     const uint8_t number_of_words = 7;
+    printf("break 2\n\n");
     uint32_t control_word = SCALER_CTL0_VALID              |        // denotes the start of a plane
                             SCALER_CTL0_UNITY              |        // indicates no scaling
                             plane.pixel_order       << 13  |        // pixel order
                             number_of_words         << 24  |        // number of words in this plane
                             plane.format;                           // pixel format
+    
     WRITE_WORD(control_word);
-
+    
     /* Position Word 0 */
     uint32_t position_word_0 = plane.start_x        << 0   |
                                plane.start_y        << 12;
@@ -61,13 +65,14 @@ static void write_plane(uint16_t* offset, hvs_plane plane)
 void write_display_list(hvs_plane planes[], uint8_t count)
 {
     uint16_t offset = dlist_offsets[next_dlist_buffer];
+
     const uint16_t start = offset;
 
     /* Write out each plane. */
     for (uint8_t p = 0; p < count; p++) {
         write_plane(&offset, planes[p]);
     }
-
+    
     /* End Word */
     dlist_memory[offset] = SCALER_CTL0_END;
 

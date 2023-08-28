@@ -34,6 +34,7 @@ void enable_interrupt_controller()
 	put32(ENABLE_IRQS_1, SYSTEM_TIMER_IRQ_1); // SYSTEM_TIMER_IRQ_1 == (1 >> 1)
 }
 
+// called from handle_invalid_entry in show_invalid_entry_message
 void show_invalid_entry_message(int type, unsigned long esr, unsigned long address)
 {
 	printf("%s, ESR: %x, address: %x\r\n", entry_error_messages[type], esr, address);
